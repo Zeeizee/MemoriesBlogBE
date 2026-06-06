@@ -17,13 +17,20 @@ app.get('/',(req,res)=>{
     res.send("Welcome to Home webpage");
 })
 
-const CONNECTION_URL=process.env.MONGODB_URI
-const PORT=process.env.PORT || 5000;
+const CONNECTION_URL = process.env.MONGODB_URI
+const PORT = process.env.PORT || 5000
 
+mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('MongoDB connected')
+        if (!process.env.VERCEL) {
+            app.listen(PORT, () => console.log(`server running at port ${PORT}`))
+        }
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err)
+    })
 
-
-mongoose.connect(CONNECTION_URL,{useNewUrlParser:true,useUnifiedTopology:true})
-.then(()=>app.listen(PORT,()=>console.log(`server running at port ${PORT}`)))
-.catch(err=>{console.log(`${err} server not connected`)})
+export default app
 
 
