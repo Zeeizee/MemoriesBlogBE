@@ -17,7 +17,7 @@ app.get('/',(req,res)=>{
     res.send("Welcome to Home webpage");
 })
 
-const CONNECTION_URL="mongodb+srv://zenizee:zeni123@cluster0.geb2h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const CONNECTION_URL=process.env.MONGODB_URI
 const PORT=process.env.PORT || 5000;
 
 
