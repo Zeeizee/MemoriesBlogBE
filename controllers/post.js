@@ -12,6 +12,17 @@ export const getAllPosts= async (req,res)=>{
   }
 
 };
+export const getPostById=async (req,res)=>{
+  const {id}=req.params;
+  if(mongoose.Types.ObjectId.isValid(id))
+  {
+    const post=await PostModel.findById(id);
+    res.status(200).json(post);
+  }
+  else{
+    res.status(404).json({message:"Post Not Found"});
+  }
+}
 export const createNewPosts=async (req,res)=>{
     const postBody=req.body;
     console.log("creating new post")
@@ -27,17 +38,14 @@ export const createNewPosts=async (req,res)=>{
 }   
 export const delPosts=async (req,res)=>{ 
     const {id}=req.body;
-   console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$in delPost function",id)
    await PostModel.findByIdAndDelete(id)
    res.json({status:200,message:"Post Deleted Successfully"});
     
 
 }
 export const updatePosts=async (req,res)=>{ 
-   console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
    const {id:_id}=req.params;
    const postData=req.body;
-   console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",_id)
    if(mongoose.Types.ObjectId.isValid(_id))
    {
     const updatedPost=await PostModel.findByIdAndUpdate(_id,postData,{new:true})
@@ -50,9 +58,7 @@ export const updatePosts=async (req,res)=>{
 
 }
 export const likePosts=async (req,res)=>{ 
-   console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
    const {id:_id}=req.params;
-   console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",_id)
    if(mongoose.Types.ObjectId.isValid(_id))
    {
     const mypost=await PostModel.findById(_id)
