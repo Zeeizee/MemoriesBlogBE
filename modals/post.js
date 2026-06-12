@@ -4,6 +4,7 @@ const postSchema=mongoose.Schema({
     title:String,
     message:String,
     creator:String,
+    category:String,
     tags:[String],
     selectedFile:String,
     likeCount:{
@@ -12,7 +13,7 @@ const postSchema=mongoose.Schema({
     },
     createdAt:{
         type:Date,
-        default:new Date(),
+        default:Date.now,
     },
 
 })
